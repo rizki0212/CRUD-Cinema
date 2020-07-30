@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<tr th:each="genreModel:${genreModelList}">
+					<td><a th:text ="${genreModel.kodeGenre}"></a></td>
+					<td><a th:text ="${genreModel.namaGenre}"></a></td>
+					<td><button th:value = "${genreModel.kodeGenre}" id="btn-lihat" class="btn btn-success">Detail</button></td>
+					<td><button th:value = "${genreModel.kodeGenre}" id="btn-ubah" class="btn btn-warning">Ubah</button></td>
+					<td><button th:value = "${genreModel.kodeGenre}" id="btn-hapus" class="btn btn-danger">Hapus</button></td>
+				</tr>
+</body>
+</html>

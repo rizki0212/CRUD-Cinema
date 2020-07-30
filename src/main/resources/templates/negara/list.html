@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<tr th:each="negaraModel:${negaraModelList}">
+					<td><a th:text ="${negaraModel.kodeNegara}"></a></td>
+					<td><a th:text ="${negaraModel.namaNegara}"></a></td>
+					<td><button th:value = "${negaraModel.kodeNegara}" id="btn-lihat" class="btn btn-success">Detail</button></td>
+					<td><button th:value = "${negaraModel.kodeNegara}" id="btn-ubah" class="btn btn-warning">Ubah</button></td>
+					<td><button th:value = "${negaraModel.kodeNegara}" id="btn-hapus" class="btn btn-danger">Hapus</button></td>
+				</tr>
+</body>
+</html>

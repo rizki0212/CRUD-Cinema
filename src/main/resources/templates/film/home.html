@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1>Data Film</h1>
+			<button type="button" class="btn btn-primary btn-fw mb-2" id="btn-tambah">Tambah</button> 
+			<table class="table table-hover">
+				<tr class="table-success">
+					<td>Kode Film</td>
+					<td>Nama Film</td>
+					<td>Genre</td>
+					<td>Artis</td>
+					<td>Produser</td>
+					<td>Pendapatan</td>
+					<td>Nominasi</td>
+					<td>Detail</td>
+					<td>Ubah</td>
+					<td>Hapus</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<form id="form-search">
+							<div class="input-group">
+								<input type=text class="form-control"
+									placeholder="Masukkan Nama Film" aria-label="Username"
+									aria-describedby="colored-addon3" name=namaFilm><br>
+								<div class="input-group-append bg-primary border-primary">
+									<button class="input-group-text bg-transparent" type=submit>Cari
+									</button>
+								</div>
+							</div>
+						</form>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tbody id="list-film">
+				
+					<!-- ambil file dari list.html -->
+					
+				</tbody>
+			</table>
+			<div id="modal-film" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">							
+							<h4 class="modal-title">Pop-up Film</h4>
+						</div>
+						<div class="modal-body">
+							<p>Some text in the modal.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" >
+	
+	refresh();
+	function refresh(){
+		$.ajax({
+			url :'/cinema/film/list',
+			get :'get',
+			dataType :'html',
+			success : function(result){
+			$('#list-film').html(result);
+			}
+		});
+	}
+	//Ajax Pup-up tambah data
+	$('#btn-tambah').click(function() {
+		var kodeFilm = $(this).val();
+		$.ajax({
+			url :'/cinema/film/add',
+			type :'get',
+			dataType :'html',
+			data :{kodeFilm, kodeFilm},
+			
+		success :function(result){
+			$('#modal-film').modal('show');
+			$('#modal-film').find('.modal-body').html(result);
+		}
+		});
+	});
+	
+	$('#modal-film').on('submit','#form-film-tambah',function(){
+		$.ajax({
+			url :'/cinema/film/create',
+			type : 'post',
+			data : $(this).serialize(),
+			success : function(result){
+				alert('Data Berhasil Disimpan');
+				$('#modal-film').modal('hide');
+				
+				refresh();
+			}
+		});
+		return false;
+		
+	});
+	
+	$('#list-film').on('click','#btn-lihat',function(){
+			var kodeFilm = $(this).val();
+			$.ajax({
+				url :'/cinema/film/detail',
+				type :'get',
+				dataType :'html',
+				data :{kodeFilm, kodeFilm},
+				
+			success :function(result){
+				$('#modal-film').modal('show');
+				$('#modal-film').find('.modal-body').html(result);
+			}
+		});
+	});
+	
+	// Ajax button Ubah
+	$('#list-film').on('click','#btn-ubah',function(){
+		var kodeFilm = $(this).val();
+		$.ajax({
+			url :'/cinema/film/ubah',
+			type :'get',
+			dataType :'html',
+			data :{kodeFilm, kodeFilm},
+			
+		success :function(result){
+			$('#modal-film').modal('show');
+			$('#modal-film').find('.modal-body').html(result);
+		}
+	});
+});
+	
+	$('#modal-film').on('submit','#form-film-ubah',function(){
+		$.ajax({
+			url :'/cinema/film/update',
+			type : 'post',
+			data : $(this).serialize(),
+			success : function(result){
+				alert('Data Berhasil Disimpan');
+				$('#modal-film').modal('hide');
+				
+				refresh();
+			}
+		});
+		return false;
+		
+	});
+	//akhir Ajax button Ubah
+	
+	//Ajax button Hapus
+	$('#list-film').on('click','#btn-hapus',function(){
+		if(confirm('Anda Yakin ?')){
+		var kodeFilm = $(this).val();
+		$.ajax({
+			url :'/cinema/film/delete',
+			type :'get',
+			dataType :'html',
+			data :{kodeFilm, kodeFilm},
+			
+		success :function(result){
+			alert('Data berhasil dihapus');
+	    	 $('#modal-artis').modal('hide');
+			refresh();
+		}
+	});
+		}else {
+			return false
+		}
+});
+	// akhir Ajax button Hapus
+	
+	$('#form-search').on('submit',function(){
+		$.ajax({
+			url :'/cinema/film/search',
+			type :'post',
+			dataType :'html',
+			data :$(this).serialize(),
+			
+		success :function(result){
+			$('#list-film').html(result);
+			
+		}
+		});
+		return false
+	});
+	
+</script>
+</html>

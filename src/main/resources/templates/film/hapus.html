@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Hapus</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1 class="card-title">Hapus Data Film</h1>
+			<form class="form-sample" id="form-film-hapus">
+				<div class="form-group">
+					<label style="color: blue">Anda yakin akan menghapus data?</label>
+					<input hidden="" type="text" class="form-control" name="kodeFilm" th:value="${filmModel.kodeFilm}">
+				</div>
+				<div>
+					<button type="submit" class="btn btn-danger mr-2">Ya</button>
+					<button class="btn btn-light" data-dismiss="modal">Tidak</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

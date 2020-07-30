@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Lihat Detail Data</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1 class="card-title">Detail Artis</h1>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Kode Artis</th>
+						<th>Nama Artis</th>
+						<th>Jenis Kelamin</th>
+						<th>Bayaran</th>
+						<th>Award</th>
+						<th>Negara</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><a th:text = "${artisModel.kodeArtis}"></a></td>
+						<td><a th:text = "${artisModel.namaArtis}"></a></td>
+						<td><a th:text = "${artisModel.jenisKelamin}"></a></td>
+						<td><a th:text = "${artisModel.bayaran}"></a></td>
+						<td><a th:text = "${artisModel.award}"></a></td>
+						<td><a th:text = "${artisModel.kodeNegara}"></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

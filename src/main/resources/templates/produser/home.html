@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1>Data Produser</h1>
+			<button type="button" class="btn btn-primary btn-fw mb-2" id="btn-tambah">Tambah Produser</button> 
+			<table class="table table-hover">
+				<tr class="table-success">
+					<td>Kode Produser</td>
+					<td>Nama Produser</td>
+					<td>Detail</td>
+					<td>Ubah</td>
+					<td>Hapus</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<form id="form-search">
+							<div class="input-group">
+								<input type=text class="form-control"
+									placeholder="Masukkan Nama Produser" aria-label="Username"
+									aria-describedby="colored-addon3" name=namaProduser><br>
+								<div class="input-group-append bg-primary border-primary">
+									<button class="input-group-text bg-transparent" type=submit>Cari
+									</button>
+								</div>
+							</div>
+						</form>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tbody id="list-produser">
+				
+					<!-- ambil file dari list.html -->
+					
+				</tbody>
+			</table>
+			<div id="modal-produser" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">							
+							<h4 class="modal-title">Pop-up Produser</h4>
+						</div>
+						<div class="modal-body">
+							<p>Some text in the modal.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" >
+	
+	refresh();
+	function refresh(){
+		$.ajax({
+			url :'/cinema/produser/list',
+			get :'get',
+			dataType :'html',
+			success : function(result){
+			$('#list-produser').html(result);
+			}
+		});
+	}
+	//Ajax Pup-up tambah data
+	$('#btn-tambah').click(function() {
+		var kodeProduser = $(this).val();
+		$.ajax({
+			url :'/cinema/produser/add',
+			type :'get',
+			dataType :'html',
+			data :{kodeProduser, kodeProduser},
+			
+		success :function(result){
+			$('#modal-produser').modal('show');
+			$('#modal-produser').find('.modal-body').html(result);
+		}
+		});
+	});
+	
+	$('#modal-produser').on('submit','#form-produser-tambah',function(){
+		$.ajax({
+			url :'/cinema/produser/create',
+			type : 'post',
+			data : $(this).serialize(),
+			success : function(result){
+				alert('Data Berhasil Disimpan');
+				$('#modal-produser').modal('hide');
+				
+				refresh();
+			}
+		});
+		return false;
+		
+	});
+	
+	$('#list-produser').on('click','#btn-lihat',function(){
+			var kodeProduser = $(this).val();
+			$.ajax({
+				url :'/cinema/produser/detail',
+				type :'get',
+				dataType :'html',
+				data :{kodeProduser, kodeProduser},
+				
+			success :function(result){
+				$('#modal-produser').modal('show');
+				$('#modal-produser').find('.modal-body').html(result);
+			}
+		});
+	});
+	
+	// Ajax button Ubah
+	$('#list-produser').on('click','#btn-ubah',function(){
+		var kodeProduser = $(this).val();
+		$.ajax({
+			url :'/cinema/produser/ubah',
+			type :'get',
+			dataType :'html',
+			data :{kodeProduser, kodeProduser},
+			
+		success :function(result){
+			$('#modal-produser').modal('show');
+			$('#modal-produser').find('.modal-body').html(result);
+		}
+	});
+});
+	
+	$('#modal-produser').on('submit','#form-produser-ubah',function(){
+		$.ajax({
+			url :'/cinema/produser/update',
+			type : 'post',
+			data : $(this).serialize(),
+			success : function(result){
+				alert('Data Berhasil Disimpan');
+				$('#modal-produser').modal('hide');
+				
+				refresh();
+			}
+		});
+		return false;
+		
+	});
+	//akhir Ajax button Ubah
+	
+	//Ajax button Hapus
+	$('#list-produser').on('click','#btn-hapus',function(){
+		if(confirm('Anda Yakin ?')){
+		var kodeProduser = $(this).val();
+		$.ajax({
+			url :'/cinema/produser/delete',
+			type :'get',
+			dataType :'html',
+			data :{kodeProduser, kodeProduser},
+			
+		success :function(result){
+			refresh();
+		}
+	});
+		}else {
+			return false
+		}
+});
+	// akhir Ajax button Hapus
+	
+	$('#form-search').on('submit',function(){
+		$.ajax({
+			url :'/cinema/produser/search',
+			type :'post',
+			dataType :'html',
+			data :$(this).serialize(),
+			
+		success :function(result){
+			$('#list-produser').html(result);
+			
+		}
+		});
+		return false
+	});
+	
+</script>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Lihat Detail Data</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1 class="card-title">Detail Film</h1>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Kode Film</th>
+						<th>Nama Film</th>
+						<th>Genre</th>
+						<th>Artis</th>
+						<th>Produser</th>
+						<th>Pendapatan</th>
+						<th>Nominasi</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><a th:text = "${filmModel.kodeFilm}"></a></td>
+						<td><a th:text = "${filmModel.namaFilm}"></a></td>
+						<td><a th:text = "${filmModel.kodeGenre}"></a></td>
+						<td><a th:text = "${filmModel.kodeArtis}"></a></td>
+						<td><a th:text = "${filmModel.kodeProduser}"></a></td>
+						<td><a th:text = "${filmModel.pendapatanFilm}"></a></td>
+						<td><a th:text = "${filmModel.nominasiFilm}"></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

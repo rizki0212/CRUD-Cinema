@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Search</title>
+</head>
+<body>
+	<table>
+	<tbody>
+			<tr th:each="artisModel:${artisModelList}">
+				<td style="color:pink">---</td>
+				<td><a th:text = "${artisModel.namaArtis}"></a></td>
+				<td><a th:text = "${artisModel.jenisKelamin}"></a></td>
+				<td><a th:text = "${artisModel.bayaran}"></a></td>
+				<td><a th:text = "${artisModel.award}"></a></td>
+				<!-- <td><a th:text = "${artisModel.kodeNegara}"></a></td> -->
+				<td><button type="button" th:value="${artisModel.kodeArtis}" class="btn btn-success mr-2" id="btn-lihat">Lihat</button></td>
+				<td><button type="button" th:value="${artisModel.kodeArtis}" class="btn btn-warning mr-2" id="btn-edit">Edit</button></td>
+				<td><button type="button" th:value="${artisModel.kodeArtis}" class="btn btn-danger mr-2" id="btn-hapus">Hapus</button></td>
+			</tr>
+		</tbody>
+		</table>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1>Data Genre</h1>
+			<button type="button" class="btn btn-primary btn-fw mb-2" id="btn-tambah">Tambah	Genre</button> 
+			<table class="table table-hover">
+				<tr class="table-success">
+					<td>Kode Genre</td>
+					<td>Nama Genre</td>
+					<td>Detail</td>
+					<td>Ubah</td>
+					<td>Hapus</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<form id="form-search">
+							<div class="input-group">
+								<input type=text class="form-control"
+									placeholder="Masukkan Nama Genre" aria-label="Username"
+									aria-describedby="colored-addon3" name=namaGenre><br>
+								<div class="input-group-append bg-primary border-primary">
+									<button class="input-group-text bg-transparent" type=submit>Cari
+									</button>
+								</div>
+							</div>
+						</form>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tbody id="list-genre">
+				
+					<!-- ambil file dari list.html -->
+					
+				</tbody>
+			</table>
+			<div id="modal-genre" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">							
+							<h4 class="modal-title">Pop-up Genre</h4>
+						</div>
+						<div class="modal-body">
+							<p>Some text in the modal.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" >
+	
+	refresh();
+	function refresh(){
+		$.ajax({
+			url :'/cinema/genre/list',
+			get :'get',
+			dataType :'html',
+			success : function(result){
+			$('#list-genre').html(result);
+			}
+		});
+	}
+	//Ajax Pup-up tambah data
+	$('#btn-tambah').click(function() {
+		var kodeGenre = $(this).val();
+		$.ajax({
+			url :'/cinema/genre/add',
+			type :'get',
+			dataType :'html',
+			data :{kodeGenre, kodeGenre},
+			
+		success :function(result){
+			$('#modal-genre').modal('show');
+			$('#modal-genre').find('.modal-body').html(result);
+		}
+		});
+	});
+	
+	$('#modal-genre').on('submit','#form-genre-tambah',function(){
+		$.ajax({
+			url :'/cinema/genre/create',
+			type : 'post',
+			data : $(this).serialize(),
+			success : function(result){
+				alert('Data Berhasil Disimpan');
+				$('#modal-genre').modal('hide');
+				
+				refresh();
+			}
+		});
+		return false;
+		
+	});
+	
+	$('#list-genre').on('click','#btn-lihat',function(){
+			var kodeGenre = $(this).val();
+			$.ajax({
+				url :'/cinema/genre/detail',
+				type :'get',
+				dataType :'html',
+				data :{kodeGenre, kodeGenre},
+				
+			success :function(result){
+				$('#modal-genre').modal('show');
+				$('#modal-genre').find('.modal-body').html(result);
+			}
+		});
+	});
+	
+	// Ajax button Ubah
+	$('#list-genre').on('click','#btn-ubah',function(){
+		var kodeGenre = $(this).val();
+		$.ajax({
+			url :'/cinema/genre/ubah',
+			type :'get',
+			dataType :'html',
+			data :{kodeGenre, kodeGenre},
+			
+		success :function(result){
+			$('#modal-genre').modal('show');
+			$('#modal-genre').find('.modal-body').html(result);
+		}
+	});
+});
+	
+	$('#modal-genre').on('submit','#form-genre-ubah',function(){
+		$.ajax({
+			url :'/cinema/genre/update',
+			type : 'post',
+			data : $(this).serialize(),
+			success : function(result){
+				alert('Data Berhasil Disimpan');
+				$('#modal-genre').modal('hide');
+				
+				refresh();
+			}
+		});
+		return false;
+		
+	});
+	//akhir Ajax button Ubah
+	
+	//Ajax button Hapus
+	$('#list-genre').on('click','#btn-hapus',function(){
+		if(confirm('Anda Yakin ?')){
+		var kodeGenre = $(this).val();
+		$.ajax({
+			url :'/cinema/genre/delete',
+			type :'get',
+			dataType :'html',
+			data :{kodeGenre, kodeGenre},
+			
+		success :function(result){
+			refresh();
+		}
+	});
+		}else {
+			return false
+		}
+});
+	// akhir Ajax button Hapus
+	
+	$('#form-search').on('submit',function(){
+		$.ajax({
+			url :'/cinema/genre/search',
+			type :'post',
+			dataType :'html',
+			data :$(this).serialize(),
+			
+		success :function(result){
+			$('#list-genre').html(result);
+			
+		}
+		});
+		return false
+	});
+	
+</script>
+</html>

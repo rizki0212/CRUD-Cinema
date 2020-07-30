@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Tambah Data</title>
+</head>
+<body>
+	<div class="card-body">
+		<h1 calss="card-tittle">Tambah Data Film</h1>
+		<p class="card-descrtiption">Masukan detail data</p>
+		<form class="form-sample" id="form-film-tambah">
+			<div class="form-group">
+				<label stlye="color : blue">Kode Film</label>
+				<input style="text" class="form-control" placeholder="Masukan Kode Film" name="kodeFilm">
+			</div>
+			<div class="form-group">
+				<label stlye="color : blue">Nama Film</label>
+				<input style="text" class="form-control" placeholder="Masukan Nama Film" name="namaFilm">
+			</div>
+			<div class="form-group">
+				<label stlye="color : blue">Genre</label>
+				<select class="form-control" name="kodeGenre">
+					<option>--Pilih--</option>
+					<option th:each="genreModel:${genreModelList}" 
+					th:value="${genreModel.kodeGenre}" 
+					th:text="${genreModel.namaGenre}"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label stlye="color : blue">Artis</label>
+				<select class="form-control" name="kodeArtis">	
+					<option>--Pilih--</option>
+					<option th:each="artisModel:${artisModelList}" 
+					th:value="${artisModel.kodeArtis}" 
+					th:text="${artisModel.namaArtis}"></option>
+				</select>
+			</div>
+			
+			 <div class="form-group">
+				<label stlye="color : blue">Produser</label>
+				<select class="form-control" name="kodeProduser">
+					<option>--Pilih--</option>
+					<option th:each="produserModel:${produserModelList}" 
+					th:value="${produserModel.kodeProduser}" 
+					th:text="${produserModel.namaProduser}"></option>
+				</select>
+			</div> 
+			
+			<div class="form-group">
+				<label stlye="color : blue">Pendapatan</label>
+				<input style="text" class="form-control" placeholder="Masukan Pendapatan" name="pendapatanFilm">
+			</div>
+			<div class="form-group">
+				<label stlye="color : blue">Jumlah Nominasi</label>
+				<input style="text" class="form-control" placeholder="Masukan Jumlah Nominasi" name="nominasiFilm">
+			</div>
+			<button type="submit" class="btn btn-success mr-2">Submit</button>
+			<button class="btn btn-light" data-dismiss="modal">Cancel</button>
+		</form>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<tr th:each="filmModel:${filmModelList}">
+					<td><a th:text ="${filmModel.kodeFilm}"></a></td>
+					<td><a th:text ="${filmModel.namaFilm}"></a></td>
+					<td><a th:text ="${filmModel.kodeGenre}"></a></td>
+					<td><a th:text ="${filmModel.kodeArtis}"></a></td>
+					<td><a th:text ="${filmModel.kodeProduser}"></a></td>
+					<td><a th:text ="${filmModel.pendapatanFilm}"></a></td>
+					<td><a th:text ="${filmModel.nominasiFilm}"></a></td>
+					<td><button th:value = "${filmModel.kodeFilm}" id="btn-lihat" class="btn btn-success">Detail</button></td>
+					<td><button th:value = "${filmModel.kodeFilm}" id="btn-ubah" class="btn btn-warning">Ubah</button></td>
+					<td><button th:value = "${filmModel.kodeFilm}" id="btn-hapus" class="btn btn-danger">Hapus</button></td>
+				</tr>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Lihat Detail Data</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1 class="card-title">Detail Genre</h1>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Kode Genre</th>
+						<th>Nama Genre</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><a th:text = "${genreModel.kodeGenre}"></a></td>
+						<td><a th:text = "${genreModel.namaGenre}"></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

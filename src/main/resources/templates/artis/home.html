@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Halaman Home</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1>Data Artis</h1>
+			<button type="button" class="btn btn-primary btn-fw mb-2" id="btn-tambah">Tambah
+				Artis</button>
+			<table class="table table-hover">
+				<tr class="table-success">
+					<td>Kode Artis</td>
+					<td>Nama Artis</td>
+					<td>Jenis Kelamin</td>
+					<td>Bayaran</td>
+					<td>Award</td>
+					<td>Negara</td>
+					<td>Detail</td>
+					<td>Ubah</td>
+					<td>Hapus</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<form id="form-search">
+							<div class="input-group">
+								<input type=text class="form-control"
+									placeholder="Masukkan Nama Artis" aria-label="Username"
+									aria-describedby="colored-addon3" name=namaArtis><br>
+								<div class="input-group-append bg-primary border-primary">
+									<button class="input-group-text bg-transparent" type=submit>Cari
+									</button>
+								</div>
+							</div>
+						</form>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tbody id="list-artis">
+
+					<!-- ambil file dari list.html, tbody isi dari tabel dalam kolom -->
+
+				</tbody>
+			</table>
+			<div id="modal-artis" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Pop-up Artis</h4>
+						</div>
+						<div class="modal-body">
+							<p>Some text in the modal.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	refresh();
+
+	//Ajax refresh list
+	function refresh(){
+			 $.ajax({
+		     	url : '/cinema/artis/data',
+		     	type : 'get', 
+		     	dataType : 'html',
+		     success : function(result){
+		     	$('#list-artis').html(result);
+		     }
+		     });
+	}
+	
+	
+	//Ajax Pop-up tambah data
+	//ajax ini akan berjalan ketika button tambah di klik
+	$('#btn-tambah').click(function() {
+        var kodeArtis = $(this).val();
+        $.ajax({
+        	url : '/cinema/artis/tambah',
+        	type : 'get',
+        	dataType : 'html',
+        	data : {kodeArtis,kodeArtis},
+        success : function(result){
+        	$('#modal-artis').modal('show');
+        	$('#modal-artis').find('.modal-body').html(result);
+        }
+        });
+	});
+	
+	//Ajax untuk create/tambah data
+	//Ajax ini akan berjalan ketika submit di form-artis-tambah
+	$('#modal-artis').on('submit','#form-artis-tambah',function(){
+		$.ajax({
+	     	url : '/cinema/artis/create', 
+	     	type : 'post', 
+	     	data : $(this).serialize(),
+	     	success : function(result){
+	     		alert('Data sudah berhasil ditambahkan');
+	     		$('#modal-artis').modal('hide');
+	     		refresh();
+	     	}
+	     });
+		return false;
+	});
+	
+	//Ajax untuk pop up lihat detail
+	$('#list-artis').on('click','#btn-lihat', function(){
+        var kodeArtis = $(this).val();
+		$.ajax({
+        	url : '/cinema/artis/detail',
+        	type : 'get',
+        	dataType : 'html',
+        	data : {kodeArtis,kodeArtis},
+        success : function(result){
+        	$('#modal-artis').modal('show');
+        	$('#modal-artis').find('.modal-body').html(result);
+        }
+        });
+	});
+	
+	//Ajax untuk pop up ubah data
+	$('#list-artis').on('click','#btn-edit', function(){
+        var kodeArtis = $(this).val();
+		$.ajax({
+        	url : '/cinema/artis/ubah',
+        	type : 'get',
+        	dataType : 'html',
+        	data : {kodeArtis,kodeArtis},
+        success : function(result){
+        	$('#modal-artis').modal('show');
+        	$('#modal-artis').find('.modal-body').html(result);
+        }
+        });
+	});
+	
+	//Ajax untuk update/ubah data
+	//Ajax ini akan berjalan ketika submit di form-artis-ubah
+	$('#modal-artis').on('submit','#form-artis-ubah',function(){
+		$.ajax({
+	     	url : '/cinema/artis/update',
+	     	type : 'post', 
+	     	data : $(this).serialize(),
+	     	success : function(result){
+	     		alert('Data sudah berhasil diubah');
+	     		$('#modal-artis').modal('hide');
+	     		refresh();
+	     	}
+	     });
+		return false;
+	});
+	
+	//Ajax untuk search data
+	$('#form-search').on('submit', function(){
+		 $.ajax({
+		     	url : '/cinema/artis/search', /* nama project,mapping superclass controller,mapping dari fungsi masing2 */
+		     	type : 'post', 
+		     	data : $(this).serialize(),
+		     	dataType : 'html',
+		     success : function(result){
+		     	$('#list-artis').html(result);
+		     }
+		     });
+		 return false;
+	});
+	
+	
+//ini harus di ubah
+	//Ajax untuk pop up hapus
+	$('#list-artis').on('click','#btn-hapus', function(){
+        var kodeArtis = $(this).val();
+		$.ajax({
+        	url : '/cinema/artis/hapus',
+        	type : 'get',
+        	dataType : 'html',
+        	data : {kodeArtis,kodeArtis},
+        success : function(result){
+        	$('#modal-artis').modal('show');
+        	$('#modal-artis').find('.modal-body').html(result);
+        }
+        });
+	});
+	
+	//Ajax untuk klik Ya Hapus
+	//Ajax ini akan berjalan ketika submit di form-artis-hapus
+	$('#modal-artis').on('submit', '#form-artis-hapus', function(){
+		 $.ajax({
+		     	url : '/cinema/artis/delete', /* nama project,mapping superclass controller,mapping dari fungsi masing2 */
+		     	type : 'get', 
+		     	data : $(this).serialize(),
+		     success : function(result){
+		    	 alert('Data berhasil dihapus');
+		    	 $('#modal-artis').modal('hide');
+		    	 refresh();
+		     }
+		     });
+		 return false;
+	});
+	
+	
+</script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Lihat Detail Data</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1 class="card-title">Detail Produser</h1>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Kode Negara</th>
+						<th>Nama Negara</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><a th:text = "${produserModel.kodeProduser}"></a></td>
+						<td><a th:text = "${produserModel.namaProduser}"></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

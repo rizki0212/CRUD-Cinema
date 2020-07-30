@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1>Data Negara</h1>
+			<button type="button" class="btn btn-primary btn-fw mb-2" id="btn-tambah">Tambah	Negara</button> 
+			<table class="table table-hover">
+				<tr class="table-success">
+					<td>Kode Negara</td>
+					<td>Nama Negara</td>
+					<td>Detail</td>
+					<td>Ubah</td>
+					<td>Hapus</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<form id="form-search">
+							<div class="input-group">
+								<input type=text class="form-control"
+									placeholder="Masukkan Nama Negara" aria-label="Username"
+									aria-describedby="colored-addon3" name=namaNegara><br>
+								<div class="input-group-append bg-primary border-primary">
+									<button class="input-group-text bg-transparent" type=submit>Cari
+									</button>
+								</div>
+							</div>
+						</form>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tbody id="list-negara">
+				
+					<!-- ambil file dari list.html -->
+					
+				</tbody>
+			</table>
+			<div id="modal-negara" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">							
+							<h4 class="modal-title">Pop-up Negara</h4>
+						</div>
+						<div class="modal-body">
+							<p>Some text in the modal.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" >
+	
+	refresh();
+	function refresh(){
+		$.ajax({
+			url :'/negara/list',
+			get :'get',
+			dataType :'html',
+			success : function(result){
+			$('#list-negara').html(result);
+			}
+		});
+	}
+	//Ajax Pup-up tambah data
+	$('#btn-tambah').click(function() {
+		var kodeNegara = $(this).val();
+		$.ajax({
+			url :'/negara/add',
+			type :'get',
+			dataType :'html',
+			data :{kodeNegara, kodeNegara},
+			
+		success :function(result){
+			$('#modal-negara').modal('show');
+			$('#modal-negara').find('.modal-body').html(result);
+		}
+		});
+	});
+	
+	$('#modal-negara').on('submit','#form-negara-tambah',function(){
+		$.ajax({
+			url :'/negara/create',
+			type : 'post',
+			data : $(this).serialize(),
+			success : function(result){
+				alert('Data Berhasil Disimpan');
+				$('#modal-negara').modal('hide');
+				
+				refresh();
+			}
+		});
+		return false;
+		
+	});
+	
+	$('#list-negara').on('click','#btn-lihat',function(){
+			var kodeNegara = $(this).val();
+			$.ajax({
+				url :'/negara/detail',
+				type :'get',
+				dataType :'html',
+				data :{kodeNegara, kodeNegara},
+				
+			success :function(result){
+				$('#modal-negara').modal('show');
+				$('#modal-negara').find('.modal-body').html(result);
+			}
+		});
+	});
+	
+	// Ajax button Ubah
+	$('#list-negara').on('click','#btn-ubah',function(){
+		var kodeNegara = $(this).val();
+		$.ajax({
+			url :'/negara/ubah',
+			type :'get',
+			dataType :'html',
+			data :{kodeNegara, kodeNegara},
+			
+		success :function(result){
+			$('#modal-negara').modal('show');
+			$('#modal-negara').find('.modal-body').html(result);
+		}
+	});
+});
+	
+	$('#modal-negara').on('submit','#form-negara-ubah',function(){
+		$.ajax({
+			url :'/negara/update',
+			type : 'post',
+			data : $(this).serialize(),
+			success : function(result){
+				alert('Data Berhasil Disimpan');
+				$('#modal-negara').modal('hide');
+				
+				refresh();
+			}
+		});
+		return false;
+		
+	});
+	//akhir Ajax button Ubah
+	
+	//Ajax button Hapus
+	$('#list-negara').on('click','#btn-hapus',function(){
+		if(confirm('Anda Yakin ?')){
+		var kodeNegara = $(this).val();
+		$.ajax({
+			url :'/negara/delete',
+			type :'get',
+			dataType :'html',
+			data :{kodeNegara, kodeNegara},
+			
+		success :function(result){
+			refresh();
+		}
+	});
+		}else {
+			return false
+		}
+});
+	// akhir Ajax button Hapus
+	
+	$('#form-search').on('submit',function(){
+		$.ajax({
+			url :'/negara/search',
+			type :'post',
+			dataType :'html',
+			data :$(this).serialize(),
+			
+		success :function(result){
+			$('#list-negara').html(result);
+			
+		}
+		});
+		return false
+	});
+	
+</script>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Tambah data</title>
+</head>
+<body>
+	<div class="card">
+		<div class="card-body">
+			<h1 class="card-title">Tambah Data Artis</h1>
+			<p class="card-description">Masukkan detail data</p>
+			<form class="form-sample" id="form-artis-tambah">
+				<div class="form-group">
+					<label style="color: blue"> Kode Artis </label> <input
+						type="text" class="form-control"
+						placeholder="Masukkan Kode Artis" name="kodeArtis">
+				</div>
+				<div class="form-group">
+					<label style="color: blue"> Nama Artis </label> <input
+						type="text" class="form-control"
+						placeholder="Masukkan Nama Artis" name="namaArtis">
+				</div>
+				<div class="form-group">
+					<label style="color: blue"> Jenis Kelamin </label> <input
+						type="text" class="form-control"
+						placeholder="Masukkan Jenis Kelamin" name="jenisKelamin">
+				</div>
+				<div class="form-group">
+					<label style="color: blue"> Bayaran </label> <input
+						type="text" class="form-control"
+						placeholder="Masukkan Jumlah Bayaran" name="bayaran">
+				</div>
+				<div class="form-group">
+					<label style="color: blue"> Award </label> <input
+						type="text" class="form-control"
+						placeholder="Masukkan Jumlah Award" name="award">
+				</div>
+				<div class="form-group">
+					<label style="color: green"> Negara </label> 
+					<select class="form-control" name="negara">
+						<option>----Pilih Negara----</option>
+						<option th:each="negaraModel:${negaraModelList}" 
+						th:value="${negaraModel.kodeNegara}"
+						th:text="${negaraModel.namaNegara}"></option>
+					</select>
+				</div>
+				<div>
+					<button type="submit" class="btn btn-success mr-2">Submit</button>
+					<button class="btn btn-light" data-dismiss="modal">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
